@@ -1,0 +1,258 @@
+@use './variables.scss' as *;
+
+#app {
+  .main-container {
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: $sideBarWidth;
+    position: relative;
+  }
+  
+  .sidebar-container {
+    transition: width 0.28s;
+    width: $sideBarWidth !important;
+    background-color: $menuBg;
+    height: 100%;
+    position: fixed;
+    font-size: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
+    background: $blue;
+
+    // Element Plus 折叠过渡（替换原 Element UI 类名）
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
+    }
+
+    // Element Plus 滚动条类名适配
+    .el-scrollbar__bar.is-vertical {
+      right: 0px;
+    }
+
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    &.has-logo {
+      .el-scrollbar {
+        height: calc(100% - 50px);
+      }
+    }
+
+    .is-horizontal {
+      display: none;
+    }
+
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .svg-icon {
+      margin-right: 16px;
+    }
+
+    .sub-el-icon {
+      margin-right: 12px;
+      margin-left: -2px;
+    }
+
+    // Element Plus 菜单适配
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+      
+      a {
+        li {
+          .svg-icon {
+            color: $menuFontColor;
+            font-size: 18px;
+            vertical-align: middle;
+            
+            .icon {
+              color:$menuFontColor;
+            }
+          }
+          
+          span {
+            color: $menuFontColor;
+          }
+          
+          &:hover {
+            .svg-icon {
+              color: $hoverFontColor
+            }
+            
+            span {
+              color: $hoverFontColor;
+            }
+          }
+        }
+      }
+    }
+
+    // 菜单 hover 样式
+    .submenu-title-noDropdown,
+    .el-sub-menu__title { // Element Plus 子菜单标题类名
+      &:hover {
+        background: linear-gradient(90deg,#1E3CAE 3.89%, #001529 100%);
+      }
+    }
+
+    .is-active > .el-sub-menu__title { // Element Plus 激活子菜单
+      color: $subMenuActiveText !important;
+    }
+
+    & .nest-menu .el-sub-menu > .el-sub-menu__title, // Element Plus 嵌套菜单
+    & .el-sub-menu .el-menu-item { // Element Plus 菜单项
+      min-width: $sideBarWidth !important;
+      background-color: $subMenuBg !important;
+
+      &:hover {
+        background-color: $subMenuHover !important;
+      }
+    }
+  }
+
+  .hideSidebar {
+    .sidebar-container {
+      width: 54px !important;
+    }
+    
+    .main-container {
+      margin-left: 54px;
+    }
+    
+    .submenu-title-noDropdown {
+      padding: 0 !important;
+      position: relative;
+
+      .el-tooltip { // Element Plus 提示框
+        padding: 0 !important;
+        
+        .svg-icon {
+          margin-left: 20px;
+        }
+        
+        .sub-el-icon {
+          margin-left: 19px;
+        }
+      }
+    }
+    
+    .el-sub-menu { // Element Plus 子菜单
+      overflow: hidden;
+      
+      & > .el-sub-menu__title {
+        padding: 0 !important;
+        
+        .svg-icon {
+          margin-left: 20px;
+        }
+        
+        .sub-el-icon {
+          margin-left: 19px;
+        }
+        
+        .el-sub-menu__icon-arrow { // Element Plus 子菜单箭头
+          display: none;
+        }
+      }
+    }
+    
+    .el-menu--collapse { // Element Plus 折叠菜单
+      .el-sub-menu {
+        & > .el-sub-menu__title {
+          & > span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .el-menu--collapse .el-menu .el-sub-menu { // Element Plus 折叠嵌套菜单
+    min-width: $sideBarWidth !important;
+  }
+
+  // 移动端适配
+  .mobile {
+    .main-container {
+      margin-left: 0px;
+    }
+    
+    .sidebar-container {
+      transition: transform .28s;
+      width: $sideBarWidth !important;
+    }
+    
+    &.hideSidebar {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(-$sideBarWidth, 0, 0);
+      }
+    }
+  }
+
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}
+
+// 菜单折叠状态样式
+.el-menu--vertical { // Element Plus 垂直菜单
+  & > .el-menu {
+    .svg-icon {
+      margin-right: 16px;
+    }
+    
+    .sub-el-icon {
+      margin-right: 12px;
+      margin-left: -2px;
+    }
+  }
+
+  .nest-menu .el-sub-menu > .el-sub-menu__title,
+  .el-menu-item { // Element Plus 菜单项
+    &:hover {
+      background-color: $menuHover !important;
+    }
+  }
+
+  // 子菜单过长时滚动条
+  > .el-menu--popup { // Element Plus 弹出菜单
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
+  }
+}

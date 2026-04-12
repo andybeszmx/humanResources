@@ -1,0 +1,87 @@
+<template>
+  <div class="cont-top-box">
+    <el-dialog title="导出" width="500px" v-model="exportData">
+      <div class="exportTit"> 如果导出每月数据过多，请使用筛选功能后导出 </div>
+      <div class="exportCont">
+        审批发起月份：<el-date-picker v-model="value" type="date" placeholder="选择日期" />
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="exportData = false">取 消</el-button>
+          <el-button type="primary" @click="exportDataAct()">确 定</el-button>
+        </div>
+      </template>
+    </el-dialog>
+    <component :is="process" ref="setRef" @handleCloseModal="handleCloseModal" />
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { exportApprovals } from '@/api/approvals'
+import process from './process.vue'
+
+const router = useRouter()
+const process = ref('process')
+const exportData = ref(false)
+const searchKey = ref('')
+const value = ref('')
+const dataes = ref('')
+const setRef = ref(null)
+
+const exportDataAct = () => {
+  if (!value.value) {
+    ElMessage.success('请选择导出时间！')
+  } else {
+    exportApprovals({ month: value.value }).then(res => {
+      ElMessage.success('导出成功！')
+    })
+  }
+}
+
+const handlSet = () => {
+  setRef.value.dialogFormV()
+}
+
+const handleCloseModal = () => {
+  if (setRef.value?.addUser) setRef.value.addUser.dialogFormH()
+  if (setRef.value?.positive) setRef.value.positive.dialogFormH()
+}
+</script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.cont-top-box {
+  padding: 20px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.top-lable {
+  position: relative;
+  line-height: 2;
+  a {
+    display: inline-block;
+    padding: 0 10px;
+  }
+  .careful-lab {
+    i {
+      margin-right: 5px;
+      color: #409eff;
+    }
+    display: inline-block;
+    padding: 0px 10px;
+    border-radius: 3px;
+    border: 1px solid rgba(145, 213, 255, 1);
+    background: rgba(230, 247, 255, 1);
+  }
+  .lable-tit {
+    position: absolute;
+    right: 0;
+    top: 0px;
+  }
+}
+.exportTit {
+  line-height: 50px;
+}
+</style>
