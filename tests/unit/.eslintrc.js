@@ -1,5 +1,5 @@
 module.exports = {
   env: {
-    jest: true
+    'vitest-globals/env': true
   }
 }
