@@ -72,7 +72,7 @@
                 type="danger"
                 @click="fixedSalary( scope.row.id)"
               >定薪</el-button>
-              <el-button type="text" size="small">
+              <el-button link size="small">
                 <router-link :to="`/salarys/details/${yearMonth}/${scope.row.id}`">查看</router-link>
               </el-button>
             </template>

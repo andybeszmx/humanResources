@@ -1,18 +1,3 @@
-<script setup>
-import { computed } from 'vue'
-import { isExternal } from '@/utils/validate'
-
-const props = defineProps({
-  to: {
-    type: String,
-    required: true
-  }
-})
-
-// 关键：变量名不和导入的 isExternal 重名
-const isExt = computed(() => isExternal(props.to))
-</script>
-
 <template>
   <a
     v-if="isExt"
@@ -26,5 +11,19 @@ const isExt = computed(() => isExternal(props.to))
     <slot />
   </router-link>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { isExternal } from '@/utils/validate'
+
+const props = defineProps({
+  to: {
+    type: String,
+    required: true
+  }
+})
+
+const isExt = computed(() => isExternal(props.to))
+</script>
 
 <style scoped></style>

@@ -1,20 +1,34 @@
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import defaultSettings from '@/setting'
 
-const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
+export const useSettingsStore = defineStore('settings', () => {
 
-export const useSettingsStore = defineStore('settings', {
-  state: () => ({
-    showSettings: showSettings,
-    fixedHeader: fixedHeader,
-    sidebarLogo: sidebarLogo
-  }),
-  actions: {
-    // 对应原 CHANGE_SETTING mutation/action
-    changeSetting({ key, value }) {
-      if (Object.hasOwn(this.$state, key)) {
-        this[key] = value
+  const showSettings = ref(defaultSettings.showSettings)
+  const fixedHeader = ref(defaultSettings.fixedHeader)
+  const sidebarLogo = ref(defaultSettings.sidebarLogo)
+
+  function changeSetting({ key, value }) {
+    if (Object.hasOwn({ showSettings: showSettings.value, fixedHeader: fixedHeader.value, sidebarLogo: sidebarLogo.value }, key)) {
+      // 根据 key 动态更新对应的 ref
+      switch (key) {
+        case 'showSettings':
+          showSettings.value = value
+          break
+        case 'fixedHeader':
+          fixedHeader.value = value
+          break
+        case 'sidebarLogo':
+          sidebarLogo.value = value
+          break
       }
     }
+  }
+
+  return {
+    showSettings,
+    fixedHeader,
+    sidebarLogo,
+    changeSetting
   }
 })

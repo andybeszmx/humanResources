@@ -1,11 +1,3 @@
-<script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-const key = computed(() => route.path)
-</script>
-
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
@@ -13,6 +5,14 @@ const key = computed(() => route.path)
     </transition>
   </section>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const key = computed(() => route.path)
+</script>
 
 <style scoped>
 .app-main {

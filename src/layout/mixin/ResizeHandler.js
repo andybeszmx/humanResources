@@ -25,7 +25,7 @@ export default {
 
     // 监听路由变化
     watch(
-      () => window.$route, // Vue3中需通过useRoute获取，此处适配全局路由
+      () => window.$route,
       (route) => {
         const device = store.state.app.device
         const sidebar = store.state.app.sidebar

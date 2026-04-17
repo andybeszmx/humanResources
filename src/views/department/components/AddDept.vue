@@ -1,3 +1,41 @@
+<template>
+  <el-dialog 
+    align-center
+    :model-value="showDialog" 
+    @update:model-value="close"
+    :title="showTitle"
+    @close="close">
+    <el-form ref="addDept" :model="formData" :rules="rules" label-width="120px">
+      <el-form-item prop="name" label="部门名称">
+        <el-input v-model="formData.name" placeholder="2-10个字符" style="width: 80%" size="mini" />
+      </el-form-item>
+
+      <el-form-item prop="code" label="部门编码">
+        <el-input v-model="formData.code" placeholder="2-10个字符" style="width: 80%" size="mini" />
+      </el-form-item>
+
+      <el-form-item prop="managerId" label="部门负责人">
+        <el-select v-model="formData.managerId" placeholder="请选择负责人" style="width: 80%" size="mini">
+          <el-option v-for="item in managerList" :key="item.id" :label="item.username" :value="item.id" />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item prop="introduce" label="部门介绍">
+        <el-input v-model="formData.introduce" placeholder="1-100个字符" type="textarea" size="mini" :rows="4" style="width: 80%" />
+      </el-form-item>
+
+      <el-form-item>
+        <el-row style="width: 100%; text-align: center;">
+          <el-col :span="16">
+            <el-button size="mini" type="primary" @click="btnOK">确定</el-button>
+            <el-button size="mini" @click="close">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
+</template>
+
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -15,16 +53,12 @@ const props = defineProps({
   }
 })
 
-// 事件发射
 const emit = defineEmits(['update:showDialog', 'updateDepartment'])
 
-// 表单 ref
 const addDept = ref(null)
 
-// 负责人列表
 const managerList = ref([])
 
-// 表单数据
 const formData = reactive({
   code: '',
   introduce: '',
@@ -33,7 +67,6 @@ const formData = reactive({
   pid: ''
 })
 
-// 标题（computed）
 const showTitle = computed(() => formData.id ? '编辑部门' : '新增部门')
 
 // 表单校验规则
@@ -130,44 +163,6 @@ onMounted(() => {
   loadManagerList()
 })
 </script>
-
-<template>
-  <el-dialog 
-    align-center
-    :model-value="showDialog" 
-    @update:model-value="close"
-    :title="showTitle"
-    @close="close">
-    <el-form ref="addDept" :model="formData" :rules="rules" label-width="120px">
-      <el-form-item prop="name" label="部门名称">
-        <el-input v-model="formData.name" placeholder="2-10个字符" style="width: 80%" size="mini" />
-      </el-form-item>
-
-      <el-form-item prop="code" label="部门编码">
-        <el-input v-model="formData.code" placeholder="2-10个字符" style="width: 80%" size="mini" />
-      </el-form-item>
-
-      <el-form-item prop="managerId" label="部门负责人">
-        <el-select v-model="formData.managerId" placeholder="请选择负责人" style="width: 80%" size="mini">
-          <el-option v-for="item in managerList" :key="item.id" :label="item.username" :value="item.id" />
-        </el-select>
-      </el-form-item>
-
-      <el-form-item prop="introduce" label="部门介绍">
-        <el-input v-model="formData.introduce" placeholder="1-100个字符" type="textarea" size="mini" :rows="4" style="width: 80%" />
-      </el-form-item>
-
-      <el-form-item>
-        <el-row style="width: 100%; text-align: center;">
-          <el-col :span="16">
-            <el-button size="mini" type="primary" @click="btnOK">确定</el-button>
-            <el-button size="mini" @click="close">取消</el-button>
-          </el-col>
-        </el-row>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
-</template>
 
 <style scoped>
 </style>

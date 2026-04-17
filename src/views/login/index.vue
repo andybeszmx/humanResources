@@ -1,16 +1,41 @@
+<template>
+  <div class="login-container">
+    <div class="logo" />
+    <div class="form">
+      <h1>登录</h1>
+      <el-card shadow="never" class="login-card">
+        <!--登录表单-->
+        <el-form ref="form" :model="loginForm" :rules="loginRules">
+          <el-form-item prop="mobile">
+            <el-input v-model="loginForm.mobile" placeholder="请输入手机号" />
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="loginForm.password" show-password placeholder="请输入密码" />
+          </el-form-item>
+          <el-form-item prop="isAgree">
+            <el-checkbox v-model="loginForm.isAgree">
+              用户平台使用协议
+            </el-checkbox>
+          </el-form-item>
+          <el-form-item>
+            <el-button style="width:350px" type="primary" @click="login">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </el-card>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, reactive } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
 
-// 获取Vuex和Router实例
 const userStore = useUserStore()
 const router = useRouter()
 
-// 表单Ref引用
 const form = ref(null)
 
-// 登录表单数据
 const loginForm = reactive({
   mobile: import.meta.env.MODE === 'development' ? '13800000002' : '',
   password: import.meta.env.MODE === 'development' ? `itHeiMa@${new Date().toISOString().slice(0, 10).replace(/-/g, '')}` : '',
@@ -58,41 +83,12 @@ const login = async () => {
   // 表单校验
   const isOK = await form.value.validate()
   if (isOK) {
-    // 触发Vuex登录action
     await userStore.login(loginForm)
     // 跳转首页
     router.push('/')
   }
 }
 </script>
-
-<template>
-  <div class="login-container">
-    <div class="logo" />
-    <div class="form">
-      <h1>登录</h1>
-      <el-card shadow="never" class="login-card">
-        <!--登录表单-->
-        <el-form ref="form" :model="loginForm" :rules="loginRules">
-          <el-form-item prop="mobile">
-            <el-input v-model="loginForm.mobile" placeholder="请输入手机号" />
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input v-model="loginForm.password" show-password placeholder="请输入密码" />
-          </el-form-item>
-          <el-form-item prop="isAgree">
-            <el-checkbox v-model="loginForm.isAgree">
-              用户平台使用协议
-            </el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button style="width:350px" type="primary" @click="login">登录</el-button>
-          </el-form-item>
-        </el-form>
-      </el-card>
-    </div>
-  </div>
-</template>
 
 <style lang="scss">
 .login-container {

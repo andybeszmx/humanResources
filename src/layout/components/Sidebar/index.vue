@@ -16,7 +16,6 @@ defineOptions({
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
 const userStore = useUserStore()
-// 获取当前路由（Vue3 正确方式）
 const route = useRoute()
 
 // 计算属性 - 侧边栏状态

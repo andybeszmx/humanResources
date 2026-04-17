@@ -1,54 +1,3 @@
-<script setup>
-import { ref, onMounted, nextTick } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { ArrowDown } from '@element-plus/icons-vue'
-import { transListToTreeData } from '@/utils'
-import { getDepartment, delDepartment } from '../../api/department'
-import AddDept from './components/AddDept.vue'
-
-// 响应式数据
-const currentNodeId = ref(null)
-const showDialog = ref(false)
-const datas = ref([])
-const addDeptRef = ref(null)
-
-// 树结构配置
-const defaultProps = {
-  children: 'children',
-  label: 'name'
-}
-
-// 获取部门列表
-const getDepartmentList = async () => {
-  const res = await getDepartment()
-  datas.value = transListToTreeData(res, 0)
-}
-
-// 部门操作
-const operateDept = async (type, id) => {
-  if (type === 'add') {
-    showDialog.value = true
-    currentNodeId.value = id
-  } else if (type === 'edit') {
-    showDialog.value = true
-    currentNodeId.value = id
-    nextTick(() => {
-      addDeptRef.value?.getDetail()
-    })
-  } else {
-      await ElMessageBox.confirm('确认删除该部门？', '提示', { type: 'warning' })
-      await delDepartment(id)
-      ElMessage.success('删除成功')
-      getDepartmentList()
-  }
-}
-
-// 初始化
-onMounted(() => {
-  getDepartmentList()
-})
-</script>
-
 <template>
   <div class="container">
     <div class="app-container">
@@ -104,6 +53,54 @@ onMounted(() => {
     />
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted, nextTick } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ArrowDown } from '@element-plus/icons-vue'
+import { transListToTreeData } from '@/utils'
+import { getDepartment, delDepartment } from '../../api/department'
+import AddDept from './components/AddDept.vue'
+
+const currentNodeId = ref(null)
+const showDialog = ref(false)
+const datas = ref([])
+const addDeptRef = ref(null)
+
+const defaultProps = {
+  children: 'children',
+  label: 'name'
+}
+
+// 获取部门列表
+const getDepartmentList = async () => {
+  const res = await getDepartment()
+  datas.value = transListToTreeData(res, 0)
+}
+
+// 部门操作
+const operateDept = async (type, id) => {
+  if (type === 'add') {
+    showDialog.value = true
+    currentNodeId.value = id
+  } else if (type === 'edit') {
+    showDialog.value = true
+    currentNodeId.value = id
+    nextTick(() => {
+      addDeptRef.value?.getDetail()
+    })
+  } else {
+      await ElMessageBox.confirm('确认删除该部门？', '提示', { type: 'warning' })
+      await delDepartment(id)
+      ElMessage.success('删除成功')
+      getDepartmentList()
+  }
+}
+
+onMounted(() => {
+  getDepartmentList()
+})
+</script>
 
 <style scoped>
 .app-container {

@@ -14,7 +14,7 @@ defineOptions({
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
 
-// 从 Pinia 取状态（computed 保持不变）
+// 从 Pinia 取状态
 const sidebar = computed(() => appStore.sidebar)
 const device = computed(() => appStore.device)
 const fixedHeader = computed(() => settingsStore.fixedHeader)

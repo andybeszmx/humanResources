@@ -1,3 +1,37 @@
+<template>
+  <el-dialog
+    v-model="dialogVisible"
+    width="500px"
+    title="员工导入"
+    @close="closeDialog"
+  >
+    <el-row type="flex" justify="center">
+      <div class="upload-excel">
+        <input
+          ref="excelUploadInput"
+          class="excel-upload-input"
+          type="file"
+          accept=".xlsx, .xls"
+          @change="uploadChange"
+        />
+        <div class="drop">
+          <el-icon :size="60" color="#c0c4cc">
+            <Upload />
+          </el-icon>
+          <el-button link @click="getTemplate">下载导入模板</el-button>
+          <span>
+            将文件拖到此处或
+            <el-button link @click="handleUpload">点击上传</el-button>
+          </span>
+        </div>
+      </div>
+    </el-row>
+    <el-row type="flex" justify="end" style="padding: 0 20px 20px;">
+      <el-button size="small" type="primary" @click="closeDialog">取消</el-button>
+    </el-row>
+  </el-dialog>
+</template>
+
 <script setup>
 import { ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -5,7 +39,6 @@ import { Upload } from '@element-plus/icons-vue'
 import { getExportTemplate, uploadExcel } from '@/api/employee'
 import FileSaver from 'file-saver'
 
-// 父组件传参
 const props = defineProps({
   showExcelDialog: {
     type: Boolean,
@@ -16,7 +49,6 @@ const props = defineProps({
 // 事件发射
 const emit = defineEmits(['update:showExcelDialog', 'uploadSuccess'])
 
-// 本地受控状态（彻底解决 props 只读报错）
 const dialogVisible = ref(false)
 
 // 监听 props 变化，同步到本地状态
@@ -28,7 +60,7 @@ watch(
   { immediate: true }
 )
 
-// 文件输入框ref
+// 文件输入框
 const excelUploadInput = ref(null)
 
 // 下载导入模板
@@ -70,40 +102,6 @@ const closeDialog = () => {
   emit('update:showExcelDialog', false)
 }
 </script>
-
-<template>
-  <el-dialog
-    v-model="dialogVisible"
-    width="500px"
-    title="员工导入"
-    @close="closeDialog"
-  >
-    <el-row type="flex" justify="center">
-      <div class="upload-excel">
-        <input
-          ref="excelUploadInput"
-          class="excel-upload-input"
-          type="file"
-          accept=".xlsx, .xls"
-          @change="uploadChange"
-        />
-        <div class="drop">
-          <el-icon :size="60" color="#c0c4cc">
-            <Upload />
-          </el-icon>
-          <el-button type="text" @click="getTemplate">下载导入模板</el-button>
-          <span>
-            将文件拖到此处或
-            <el-button type="text" @click="handleUpload">点击上传</el-button>
-          </span>
-        </div>
-      </div>
-    </el-row>
-    <el-row type="flex" justify="end" style="padding: 0 20px 20px;">
-      <el-button size="small" type="primary" @click="closeDialog">取消</el-button>
-    </el-row>
-  </el-dialog>
-</template>
 
 <style scoped lang="scss">
 .upload-excel {

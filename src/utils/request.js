@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/store/modules/user' // 引入你的Pinia用户store
-import router from '@/router' // 直接引入路由实例（Vue3标准写法）
+import { useUserStore } from '@/store/modules/user'
+import router from '@/router'
 
 // 创建axios实例
 const service = axios.create({
@@ -11,9 +11,7 @@ const service = axios.create({
 
 // 请求拦截器
 service.interceptors.request.use((config) => {
-  // PINIA 写法：获取store
   const userStore = useUserStore()
-  // PINIA 写法：拿token
   if (userStore.token) {
     config.headers.Authorization = `Bearer ${userStore.token}`
   }

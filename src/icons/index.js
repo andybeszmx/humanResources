@@ -6,7 +6,7 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
 export default (app) => {
   app.component('svg-icon', SvgIcon)
 
-  // 👇 Vite 方式导入所有 svg图标（等价于原来的 require.context）
+  // 👇 Vite 方式导入所有 svg图标
   import.meta.glob('./svg/*.svg', { eager: true })
   // console.log('已加载 SVG 图标:', Object.keys(svgFiles))
 }

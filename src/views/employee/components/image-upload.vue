@@ -1,5 +1,4 @@
 <template>
-  <!-- 手动上传配置：action置空 + http-request自定义上传逻辑 -->
   <el-upload
     class="avatar-uploader"
     action=""
@@ -16,15 +15,13 @@
 import { ElMessage, ElIcon } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 
-// 定义props（Vue3 组合式API写法）
 const props = defineProps({
-  modelValue: { // 替换Vue2的value，配合v-model使用
+  modelValue: {
     type: String,
     default: ''
   }
 })
 
-// 定义emit（Vue3 父子通信）
 const emit = defineEmits(['update:modelValue']) // 用于更新v-model值
 
 // 上传前校验

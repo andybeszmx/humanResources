@@ -1,9 +1,41 @@
+<template>
+  <el-dialog
+    :model-value="props.dialogVisible"
+    @update:model-value="(val) => emit('update:dialogVisible', val)"
+    title="提示"
+    width="500px"
+    @close="btnCancel"
+  >
+    <el-form ref="permissionForm" :model="permissionData" :rules="rules">
+      <el-form-item prop="name" label="权限名称">
+        <el-input v-model="permissionData.name" size="small" />
+      </el-form-item>
+      <el-form-item prop="code" label="权限标识">
+        <el-input v-model="permissionData.code" size="small" />
+      </el-form-item>
+      <el-form-item prop="description" label="权限描述">
+        <el-input v-model="permissionData.description" size="small" type="textarea" />
+      </el-form-item>
+      <el-form-item prop="enVisible" label="开启">
+        <el-switch v-model="permissionData.enVisible" :active-value="1" :inactive-value="0" size="small" />
+      </el-form-item>
+      <el-form-item>
+        <el-row style="width: 100%; text-align: center;">
+          <el-col>
+            <el-button type="primary" @click="btnOK">确定</el-button>
+            <el-button @click="btnCancel">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
+</template>
+
 <script setup>
 import { ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import { getPermissionList, addPermission, getPermissionDetail, updatePermission } from '@/api/permission'
 
-// 父组件传参
 const props = defineProps({
   dialogVisible: {
     type: Boolean,
@@ -19,13 +51,10 @@ const props = defineProps({
   }
 })
 
-// 事件发射
 const emit = defineEmits(['update:dialogVisible', 'updatePermissionList', 'update:currentId', 'update:editId'])
 
-// 表单ref
 const permissionForm = ref(null)
 
-// 表单数据
 const permissionData = ref({
   name: '',
   code: '',
@@ -136,36 +165,3 @@ const btnCancel = () => {
   emit('update:dialogVisible', false)
 }
 </script>
-
-<template>
-  <el-dialog
-    :model-value="props.dialogVisible"
-    @update:model-value="(val) => emit('update:dialogVisible', val)"
-    title="提示"
-    width="500px"
-    @close="btnCancel"
-  >
-    <el-form ref="permissionForm" :model="permissionData" :rules="rules">
-      <el-form-item prop="name" label="权限名称">
-        <el-input v-model="permissionData.name" size="small" />
-      </el-form-item>
-      <el-form-item prop="code" label="权限标识">
-        <el-input v-model="permissionData.code" size="small" />
-      </el-form-item>
-      <el-form-item prop="description" label="权限描述">
-        <el-input v-model="permissionData.description" size="small" type="textarea" />
-      </el-form-item>
-      <el-form-item prop="enVisible" label="开启">
-        <el-switch v-model="permissionData.enVisible" :active-value="1" :inactive-value="0" size="small" />
-      </el-form-item>
-      <el-form-item>
-        <el-row style="width: 100%; text-align: center;">
-          <el-col>
-            <el-button type="primary" @click="btnOK">确定</el-button>
-            <el-button @click="btnCancel">取消</el-button>
-          </el-col>
-        </el-row>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
-</template>

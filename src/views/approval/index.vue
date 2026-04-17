@@ -42,7 +42,7 @@
           </el-table-column>
             <el-table-column label="操作" width="100" fixed="right">
               <template #default="scope">
-                <el-button type="text" size="small" @click="toDetail(scope.row)">
+                <el-button link size="small" @click="toDetail(scope.row)">
                 查看
               </el-button>
               </template>

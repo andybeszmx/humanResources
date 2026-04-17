@@ -1,17 +1,3 @@
-<script setup>
-
-defineOptions({
-  name:'LogoIndex'
-})
-defineProps({
-  collapse: {
-    type: Boolean,
-    required: true
-  }
-})
-
-</script>
-
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
@@ -21,6 +7,16 @@ defineProps({
     </transition>
   </div>
 </template>
+
+<script setup>
+defineProps({
+  collapse: {
+    type: Boolean,
+    required: true
+  }
+})
+
+</script>
 
 <style lang="scss" scoped>
 .sidebarLogoFade-enter-active {

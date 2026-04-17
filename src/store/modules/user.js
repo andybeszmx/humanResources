@@ -1,62 +1,75 @@
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { login, getUserInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login as loginApi, getUserInfo } from '@/api/user'
+import { getToken, setToken as setTokenUtil, removeToken as removeTokenUtil } from '@/utils/auth'
 import { constantRoutes, resetRouter } from '@/router'
 
-export const useUserStore = defineStore('user', {
-  state: () => ({
-    token: getToken(), // 初始化时从缓存取 token
-    info: {},
-    routes: constantRoutes
-  }),
-  actions: {
-    // 对应原 login action
-    async login(data) {
-      const token = await login(data)
-      setToken(token) // 写入缓存
-      this.token = token // 更新 state
-    },
-    // 对应原 getInfo action
-    async getInfo() {
-      const res = await getUserInfo()
-      this.info = res // 直接更新 state，替代原 setInfo mutation
-      return res
-    },
-    // 对应原 logout action
-    logout() {
-      this.token = null // 清空 token
-      this.info = {} // 清空用户信息
-      removeToken() // 清除缓存 token
-      resetRouter() // 重置路由
-      this.routes = constantRoutes // 重置路由列表
-    },
-    // 对应原 setRoutes mutation
-    setRoutes(newRoutes) {
-      this.routes = [...constantRoutes, ...newRoutes]
-    },
-    // 对应原 removeToken mutation（logout 中调用）
-    removeToken() {
-      this.token = null
-      removeToken()
-    },
-    // 对应原 setInfo mutation（getInfo 中调用）
-    setInfo(info) {
-      this.info = info
-    },
-    // 对应原 setToken mutation（login 中调用）
-    setToken(token) {
-      setToken(token)
-      this.token = token
-    }
-  },
-  // 对应原 getters.js 中 user 相关的计算属性
-  getters: {
-    userId: (state) => state.info.userId,
-    avatar: (state) => state.info.staffPhoto,
-    name: (state) => state.info.username,
-    company: (state) => state.info.company,
-    departmentName: (state) => state.info.departmentName
-    // token: (state) => state.token,
-    // routes: (state) => state.routes
+export const useUserStore = defineStore('user', () => {
+  // state
+  const token = ref(getToken()) // 初始化从缓存取 token
+  const info = ref({})
+  const routes = ref(constantRoutes)
+
+  const userId = computed(() => info.value.userId)
+  const avatar = computed(() => info.value.staffPhoto)
+  const name = computed(() => info.value.username)
+  const company = computed(() => info.value.company)
+  const departmentName = computed(() => info.value.departmentName)
+
+  // actions
+  async function login(data) {
+    const newToken = await loginApi(data)
+    setTokenUtil(newToken)      // 写入缓存
+    token.value = newToken  // 更新 state
+  }
+
+  async function getInfo() {
+    const res = await getUserInfo()
+    info.value = res        // 直接更新 info
+    return res
+  }
+
+  function logout() {
+    token.value = null
+    info.value = {}
+    removeTokenUtil()
+    resetRouter()
+    routes.value = constantRoutes
+  }
+
+  function setRoutes(newRoutes) {
+    routes.value = [...constantRoutes, ...newRoutes]
+  }
+
+  function removeToken() {
+    token.value = null
+    removeTokenUtil()           // 调用工具函数清除缓存
+  }
+
+  function setInfo(infoData) {
+    info.value = infoData
+  }
+
+  function setToken(newToken) {
+    setTokenUtil(newToken)
+    token.value = newToken
+  }
+
+  return {
+    token,
+    info,
+    routes,
+    userId,
+    avatar,
+    name,
+    company,
+    departmentName,
+    login,
+    getInfo,
+    logout,
+    setRoutes,
+    removeToken,
+    setInfo,
+    setToken
   }
 })

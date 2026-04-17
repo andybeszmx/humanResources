@@ -31,7 +31,7 @@
           <!-- 操作列可按需启用 -->
           <el-table-column label="操作">
             <template #default="obj">
-              <el-button type="text" size="small" @click="router.push(`/social_securitys/detail/${obj.row.id}`)">查看详情</el-button>
+              <el-button link size="small" @click="router.push(`/social_securitys/detail/${obj.row.id}`)">查看详情</el-button>
             </template>
           </el-table-column>
         </el-table>

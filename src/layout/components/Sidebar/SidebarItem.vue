@@ -34,13 +34,11 @@ import Item from './Item.vue'
 import AppLink from './Link.vue'
 import FixiOSBug from './FixiOSBug'
 
-// 保留原组件名和mixins
 defineOptions({
   name: 'SidebarItem',
   mixins: [FixiOSBug]
 })
 
-// 定义props（与原代码一致）
 const props = defineProps({
   item: {
     type: Object,
@@ -56,10 +54,8 @@ const props = defineProps({
   }
 })
 
-// 替代原data中的onlyOneChild
 const onlyOneChild = ref(null)
 
-// 原methods中的hasOneShowingChild方法
 const hasOneShowingChild = (children = [], parent) => {
   const showingChildren = children.filter(item => {
     if (item.hidden) {
@@ -82,7 +78,6 @@ const hasOneShowingChild = (children = [], parent) => {
   return false
 }
 
-// 原methods中的resolvePath方法
 const resolvePath = (routePath) => {
   if (isExternal(routePath)) {
     return routePath

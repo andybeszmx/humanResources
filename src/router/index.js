@@ -1,6 +1,4 @@
-// router/index.js
-import { createRouter, createWebHistory } from 'vue-router' // Vue Router 5 核心API
-// 布局组件改为懒加载（Vue3 推荐）
+import { createRouter, createWebHistory } from 'vue-router' // Vue Router 核心API
 const Layout = () => import('@/layout/index.vue')
 
 // 导入模块路由
@@ -12,11 +10,6 @@ import permissionRouter from './modules/permission'
 import roleRouter from './modules/role'
 import salaryRouter from './modules/salary'
 import socialRouter from './modules/social'
-
-/**
- * 路由元信息配置保持不变
- * hidden/alwaysShow/redirect/meta 等规则与原逻辑一致
- */
 
 /**
  * 静态路由（无需权限）
@@ -57,21 +50,20 @@ export const asyncRoutes = [
   socialRouter
 ]
 
-// 创建路由实例（Vue Router 5 语法）
 const router = createRouter({
-  history: createWebHistory(), // 替代原 mode: 'history'
-  scrollBehavior: () => ({ top: 0 }), // y → top（Vue Router 5 规范）
+  history: createWebHistory(), // 'history'
+  scrollBehavior: () => ({ top: 0 }),
   routes: constantRoutes // 默认仅加载静态路由
 })
 
-// 重置路由方法（适配 Vue Router 5）
+// 重置路由方法
 export function resetRouter() {
   const newRouter = createRouter({
     history: createWebHistory(),
     scrollBehavior: () => ({ top: 0 }),
     routes: constantRoutes
   })
-  // 替换路由映射（Vue Router 5 无需修改 matcher，直接替换routes）
+  // 替换路由映射
   router.replace({ path: '/', force: true })
   Object.assign(router, newRouter)
 }

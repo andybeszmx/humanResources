@@ -5,7 +5,6 @@ import { getPermissionList } from '@/api/permission'
 import { getRoleList, addRole, updateRole, delRole, getRoleDetail, assignPerm } from '@/api/role'
 import { transListToTreeData } from '@/utils'
 
-// ========== 响应式数据 ==========
 const showDialog = ref(false)
 const list = ref([])
 const pageParams = reactive({
@@ -27,11 +26,9 @@ const permissionData = ref([])
 const perIds = ref([])
 const currentRoleId = ref(null)
 
-// 表单ref
 const roleFormRef = ref(null)
 const permTreeRef = ref(null)
 
-// ========== 方法 ==========
 // 获取角色列表
 const getRole = async () => {
   const { rows, total } = await getRoleList(pageParams)
@@ -134,7 +131,6 @@ const btnPermissionOK = async () => {
   showPermissionDialog.value = false
 }
 
-// ========== 生命周期 ==========
 onMounted(() => {
   getRole()
 })
@@ -178,14 +174,14 @@ onMounted(() => {
               <el-button size="small" @click="row.isEdit = false">取消</el-button>
             </template>
             <template v-else>
-              <el-button size="small" type="text" @click="btnPermission(row.id)">分配权限</el-button>
-              <el-button size="small" type="text" @click="btnEdit(row)">编辑</el-button>
+              <el-button size="small" link @click="btnPermission(row.id)">分配权限</el-button>
+              <el-button size="small" link @click="btnEdit(row)">编辑</el-button>
               <el-popconfirm
                 title="确定删除该角色吗？"
                 @confirm="confirmDel(row.id)"
               >
                 <template #reference>
-                  <el-button size="small" type="text" style="margin-left: 10px">删除</el-button>
+                  <el-button size="small" link style="margin-left: 10px">删除</el-button>
                 </template>
               </el-popconfirm>
             </template>

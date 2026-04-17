@@ -1,111 +1,3 @@
-<script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import ImageUpload from './components/image-upload.vue'
-import SelectTree from './components/select-tree.vue'
-import { addEmployee, getEmployeeDetail, updateEmployee } from '@/api/employee'
-
-// 路由实例
-const route = useRoute()
-const router = useRouter()
-
-// 表单ref
-const userForm = ref(null)
-
-// 表单数据
-const userInfo = reactive({
-  username: '',
-  mobile: '',
-  workNumber: '',
-  formOfEmployment: undefined,
-  departmentId: null,
-  timeOfEntry: '',
-  correctionTime: '',
-  staffPhoto: ''
-})
-
-// 表单校验规则（适配Vue3，移除this）
-const rules = {
-  username: [
-    { required: true, message: '请输入姓名', trigger: 'blur' },
-    { min: 1, max: 4, message: '姓名为1-4位' }
-  ],
-  mobile: [
-    { required: true, message: '请输入手机号', trigger: 'blur' },
-    {
-      pattern: /^1[3-9]\d{9}$/,
-      message: '手机号格式不正确',
-      trigger: 'blur'
-    }
-  ],
-  formOfEmployment: [
-    { required: true, message: '请选择聘用形式', trigger: 'blur' }
-  ],
-  departmentId: [
-    { required: true, message: '请选择部门', trigger: 'blur' }
-  ],
-  timeOfEntry: [
-    { required: true, message: '请选择入职时间', trigger: 'blur' }
-  ],
-  correctionTime: [
-    { required: true, message: '请选择转正时间', trigger: 'blur' },
-    {
-      validator: (rule, value, callback) => {
-        if (userInfo.timeOfEntry) {
-          if (new Date(userInfo.timeOfEntry) > new Date(value)) {
-            callback(new Error('转正时间不能小于入职时间'))
-            return
-          }
-        }
-        callback()
-      }
-    }
-  ]
-}
-
-// 获取员工详情（编辑模式）
-const EmployeeDetail = async () => {
-  const data = await getEmployeeDetail(route.params.id)
-  Object.assign(userInfo, data)
-}
-
-// 保存数据
-const saveData = async () => {
-  await userForm.value.validate(async (valid) => {
-    if (!valid) return
-    if (userInfo.timeOfEntry) {
-      userInfo.timeOfEntry = new Date(userInfo.timeOfEntry).toISOString().split('T')[0]
-    }
-    if (userInfo.correctionTime) {
-      userInfo.correctionTime = new Date(userInfo.correctionTime).toISOString().split('T')[0]
-    }
-    try {
-      if (route.params.id) {
-        // 编辑模式
-        await updateEmployee(userInfo)
-        ElMessage.success('更新员工成功')
-      } else {
-        // 新增模式
-        await addEmployee(userInfo)
-        ElMessage.success('新增员工成功')
-      }
-      // 跳回员工列表
-      router.push('/employee')
-    } catch (err) {
-      ElMessage.error('操作失败')
-    }
-  })
-}
-
-// 初始化
-onMounted(() => {
-  if (route.params.id) {
-    EmployeeDetail()
-  }
-})
-</script>
-
 <template>
   <div class="dashboard-container">
     <div class="app-container">
@@ -219,6 +111,110 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import ImageUpload from './components/image-upload.vue'
+import SelectTree from './components/select-tree.vue'
+import { addEmployee, getEmployeeDetail, updateEmployee } from '@/api/employee'
+
+const route = useRoute()
+const router = useRouter()
+
+const userForm = ref(null)
+
+// 表单数据
+const userInfo = reactive({
+  username: '',
+  mobile: '',
+  workNumber: '',
+  formOfEmployment: undefined,
+  departmentId: null,
+  timeOfEntry: '',
+  correctionTime: '',
+  staffPhoto: ''
+})
+
+const rules = {
+  username: [
+    { required: true, message: '请输入姓名', trigger: 'blur' },
+    { min: 1, max: 4, message: '姓名为1-4位' }
+  ],
+  mobile: [
+    { required: true, message: '请输入手机号', trigger: 'blur' },
+    {
+      pattern: /^1[3-9]\d{9}$/,
+      message: '手机号格式不正确',
+      trigger: 'blur'
+    }
+  ],
+  formOfEmployment: [
+    { required: true, message: '请选择聘用形式', trigger: 'blur' }
+  ],
+  departmentId: [
+    { required: true, message: '请选择部门', trigger: 'blur' }
+  ],
+  timeOfEntry: [
+    { required: true, message: '请选择入职时间', trigger: 'blur' }
+  ],
+  correctionTime: [
+    { required: true, message: '请选择转正时间', trigger: 'blur' },
+    {
+      validator: (rule, value, callback) => {
+        if (userInfo.timeOfEntry) {
+          if (new Date(userInfo.timeOfEntry) > new Date(value)) {
+            callback(new Error('转正时间不能小于入职时间'))
+            return
+          }
+        }
+        callback()
+      }
+    }
+  ]
+}
+
+// 获取员工详情（编辑模式）
+const EmployeeDetail = async () => {
+  const data = await getEmployeeDetail(route.params.id)
+  Object.assign(userInfo, data)
+}
+
+// 保存数据
+const saveData = async () => {
+  await userForm.value.validate(async (valid) => {
+    if (!valid) return
+    if (userInfo.timeOfEntry) {
+      userInfo.timeOfEntry = new Date(userInfo.timeOfEntry).toISOString().split('T')[0]
+    }
+    if (userInfo.correctionTime) {
+      userInfo.correctionTime = new Date(userInfo.correctionTime).toISOString().split('T')[0]
+    }
+    try {
+      if (route.params.id) {
+        // 编辑模式
+        await updateEmployee(userInfo)
+        ElMessage.success('更新员工成功')
+      } else {
+        // 新增模式
+        await addEmployee(userInfo)
+        ElMessage.success('新增员工成功')
+      }
+      // 跳回员工列表
+      router.push('/employee')
+    } catch (err) {
+      ElMessage.error('操作失败')
+    }
+  })
+}
+
+onMounted(() => {
+  if (route.params.id) {
+    EmployeeDetail()
+  }
+})
+</script>
 
 <style scoped lang="scss">
 .edit-form {

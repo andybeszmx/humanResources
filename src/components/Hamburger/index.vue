@@ -15,9 +15,6 @@
 
 <script setup>
 
-defineOptions({
-  name: 'HamburgerIndex' // 多单词写法
-})
 // 定义 props
 defineProps({
   isActive: {

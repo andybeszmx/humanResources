@@ -14,9 +14,6 @@ import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import pathToRegexp from 'path-to-regexp'
 
-defineOptions({
-  name: 'BreadcrumbIndex' // 多单词写法
-})
 // 获取路由和路由实例
 const route = useRoute()
 const router = useRouter()
@@ -51,7 +48,6 @@ const isDashboard = (route) => {
 }
 
 const pathCompile = (path) => {
-  // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
   const { params } = route
   const toPath = pathToRegexp.compile(path)
   return toPath(params)
