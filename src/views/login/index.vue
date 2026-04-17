@@ -3,7 +3,6 @@ import { ref, reactive } from 'vue'
 import { useUserStore } from '@/store/modules/user'
 import { useRouter } from 'vue-router'
 
-
 // 获取Vuex和Router实例
 const userStore = useUserStore()
 const router = useRouter()
@@ -13,9 +12,9 @@ const form = ref(null)
 
 // 登录表单数据
 const loginForm = reactive({
-  mobile: process.env.NODE_ENV === 'development' ? '13800000002' : '',
-  password: process.env.NODE_ENV === 'development' ? `itHeiMa@${new Date().toISOString().slice(0, 10).replace(/-/g, '')}` : '',
-  isAgree: process.env.NODE_ENV === 'development'
+  mobile: import.meta.env.MODE === 'development' ? '13800000002' : '',
+  password: import.meta.env.MODE === 'development' ? `itHeiMa@${new Date().toISOString().slice(0, 10).replace(/-/g, '')}` : '',
+  isAgree: import.meta.env.MODE === 'development'
 })
 
 // 表单校验规则

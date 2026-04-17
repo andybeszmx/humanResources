@@ -139,7 +139,8 @@ const btnCancel = () => {
 
 <template>
   <el-dialog
-    v-model="props.dialogVisible"
+    :model-value="props.dialogVisible"
+    @update:model-value="(val) => emit('update:dialogVisible', val)"
     title="提示"
     width="500px"
     @close="btnCancel"

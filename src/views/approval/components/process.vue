@@ -20,7 +20,7 @@
             @click="addTemp"
           >新增节点</el-button></p>
           <div
-            v-for="(item, index) in tempList"
+            v-for="(item) in tempList"
             :key="item.key"
             style="border-top:1px solid #ececec;margin-top:10px;"
           >
@@ -55,6 +55,7 @@ import { ref, reactive } from 'vue'
 import { getManagerList } from '@/api/department'
 import { process } from '@/api/approvals'
 import commonApi from '@/api/constant/approvals'
+import { ElMessage } from 'element-plus'
 
 const props = defineProps(['setData'])
 const emit = defineEmits(['handleCloseModal'])

@@ -9,7 +9,6 @@
           <i v-show="iconShow" class="fa fa-search" aria-hidden="true" title="搜索" @click="searchIcon" />
           <el-input
             v-show="searchShow"
-            v-model="formData.keyword"
             placeholder="搜索"
             clearable
             @clear="handleClear"

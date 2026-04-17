@@ -22,7 +22,10 @@ const route = useRoute()
 // 计算属性 - 侧边栏状态
 const sidebar = computed(() => appStore.sidebar)
 // 计算属性 - 路由列表（从user store获取）
-const routes = computed(() => userStore.routes)
+const routes = computed(() => {
+  // 假设 userStore.routes 是原始路由数组
+  return userStore.routes.filter(route => route.path)
+})
 // 计算属性 - 激活的菜单
 const activeMenu = computed(() => {
   const { meta, path } = route
@@ -36,6 +39,7 @@ const activeMenu = computed(() => {
 const showLogo = computed(() => settingsStore.sidebarLogo)
 // 计算属性 - 是否折叠侧边栏
 const isCollapse = computed(() => !sidebar.value.opened)
+
 </script>
 
 <template>
@@ -58,7 +62,6 @@ const isCollapse = computed(() => !sidebar.value.opened)
           :key="route.path || route.name"
           :item="route"
           :base-path="route.path"
-          v-if="route.path"
         />
       </el-menu>
     </el-scrollbar>

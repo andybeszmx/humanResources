@@ -1,4 +1,7 @@
 import { validUsername, isExternal } from '@/utils/validate.js'
+import { expect } from 'vitest'
+import { it } from 'vitest'
+import { describe } from 'vitest'
 
 describe('Utils:validate', () => {
   it('validUsername', () => {

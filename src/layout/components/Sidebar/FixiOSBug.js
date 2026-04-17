@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useAppStore } from '@/store/modules/app'
 
 export default {

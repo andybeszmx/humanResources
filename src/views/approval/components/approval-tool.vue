@@ -21,9 +21,10 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { exportApprovals } from '@/api/approvals'
 import process from './process.vue'
+import { ElMessage } from 'element-plus'
 
 const router = useRouter()
-const process = ref('process')
+const processRef = ref('process')
 const exportData = ref(false)
 const searchKey = ref('')
 const value = ref('')

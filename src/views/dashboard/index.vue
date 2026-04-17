@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted} from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import NumberScroll from './components/NumberSroll.vue'
 
 // import { useAnimateNumber } from '@vueuse/core'
@@ -37,9 +37,8 @@ const avatar = computed(() => userStore.avatar)
 const company = computed(() => userStore.company)
 const departmentName = computed(() => userStore.departmentName)
 
-
 const renderCharts = () => {
-  if (!social || !provident) return
+  if (!social.value || !provident.value) return
   if (!homeData.value.socialInsurance || !homeData.value.providentFund) return
 
   // 社保图表

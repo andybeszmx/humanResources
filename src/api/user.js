@@ -28,7 +28,6 @@ export const updatePassword = (data) => {
 export const getUserDetailById = (userId) => {
   return request({
     url: `/api/salarys/modify/${userId}`,
-    method: 'get',
-    data
+    method: 'get'
   })
 }

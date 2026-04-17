@@ -1,3 +1,4 @@
+import { onBeforeMount, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 
 const { body } = document

@@ -10,7 +10,6 @@ defineProps({
   }
 })
 
-
 </script>
 
 <template>

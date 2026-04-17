@@ -38,13 +38,13 @@
 import { ref } from 'vue'
 import { information, reviewHistory } from '@/api/approval'
 
-const information = ref({})
+const infoData = ref({})
 const reviewHistoryDataes = ref({})
 
 const getInformation = async () => {
   const { data } = await information({ id: 1 })
   getReviewHistory()
-  information.value = data
+  infoData.value = data
 }
 
 const getReviewHistory = async (id) => {

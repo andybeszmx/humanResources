@@ -7,7 +7,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-
 export default defineConfig({
   plugins: [
     vue(),
@@ -18,7 +17,7 @@ export default defineConfig({
           // 关键：指定 Element Plus 新版样式路径
           importStyle: false
         }
-      )],
+      )]
     }),
     Components({
       resolvers: [ElementPlusResolver(
@@ -26,13 +25,13 @@ export default defineConfig({
           // 关键：指定 Element Plus 新版样式路径
           importStyle: false
         }
-      )],
+      )]
     })
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    }
   },
   server: {
     proxy: {

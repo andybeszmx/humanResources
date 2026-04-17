@@ -18,15 +18,15 @@ export default {
     component: () => import('@/views/salary/setting.vue'),
     hidden:true,
     meta: {
-      title: '设置',
+      title: '设置'
     }
-  },{
+  }, {
     path: '/salarys/monthStatement/:yearMonth?',
     name: 'salarysMonthStatement',
     component: () => import('@/views/salary/month.vue'),
     hidden:true,
     meta: {
-      title: '报表',
+      title: '报表'
     }
   },
   {
@@ -36,7 +36,7 @@ export default {
     component: () => import('@/views/salary/detail.vue'),
     hidden:true,
     meta: {
-      title: '明细',
+      title: '明细'
     }
   }
 ]

@@ -11,12 +11,12 @@
     <div>
       <el-form :model="ruleForm" label-width="110px">
         <el-form-item label="调整基本工资">
-          <el-input v-model="userSalary.currentBasicSalary" style="width:220px" disabled />
+          <el-input :model-value="userSalary.currentBasicSalary" style="width:220px" disabled />
           <span class="Label">-></span>
           <el-input v-model="ruleForm.currentBasicSalary" style="width:220px" placeholder="请输入调整后基本工资" type="number" />
         </el-form-item>
         <el-form-item label="调整岗位工资">
-          <el-input v-model="userSalary.currentPostWage" style="width:220px" disabled />
+          <el-input :model-value="userSalary.currentPostWage" style="width:220px" disabled />
           <span class="Label">-></span>
           <el-input v-model="ruleForm.currentPostWage" style="width:220px" placeholder="请输入调整后岗位工资" type="number" />
         </el-form-item>

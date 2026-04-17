@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref,watch,onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import pathToRegexp from 'path-to-regexp'
 
@@ -23,7 +23,6 @@ const router = useRouter()
 
 // 响应式数据
 const levelList = ref(null)
-
 
 // 挂载时执行
 onMounted(() => {
@@ -66,7 +65,6 @@ const handleLink = (item) => {
   }
   router.push(pathCompile(path))
 }
-
 
 // 监听路由变化
 watch(

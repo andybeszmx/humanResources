@@ -182,8 +182,6 @@ const sizeForm = reactive({
 
 const cityList = ref([])
 const paymentItemList = ref([])
-const personalPayment = ref(0.0)
-const companyPayment = ref(0.0)
 const isPaySocialInMonth = ref(false)
 const isPayProvidentInMonth = ref(false)
 
@@ -236,26 +234,50 @@ const formatDate = (dateStr) => {
   return new Date(dateStr).toLocaleDateString()
 }
 
-// 计算社保缴费项目列表（同时更新个人/企业合计）
+// 计算社保缴费项目列表（返回带 companyPay/personalPay 的新数组）
 const computePaymentItemList = computed(() => {
+  const base = Number(sizeForm.userSocialSecurity.socialSecurityBase) || 0
+  const injuryRatio = Number(sizeForm.userSocialSecurity.industrialInjuryRatio) || 0.2
+
   let personalTotal = 0
   let companyTotal = 0
-  paymentItemList.value.forEach(item => {
-    if (item.name === '工伤' && item.switchCompany) {
-      item.scaleCompany = sizeForm.userSocialSecurity.industrialInjuryRatio
+
+  const newList = paymentItemList.value.map(item => {
+    // 深拷贝一份，避免修改原数据
+    const newItem = { ...item }
+    
+    // 工伤比例特殊处理
+    if (newItem.name === '工伤' && newItem.switchCompany) {
+      newItem.scaleCompany = injuryRatio
     }
-    if (item.switchCompany) {
-      item.companyPay = parseFloat((sizeForm.userSocialSecurity.socialSecurityBase * item.scaleCompany) / 100).toFixed(2)
-      companyTotal += Number(item.companyPay)
+
+    if (newItem.switchCompany) {
+      newItem.companyPay = parseFloat((base * newItem.scaleCompany) / 100).toFixed(2)
+      companyTotal += Number(newItem.companyPay)
     }
-    if (item.switchPersonal) {
-      item.personalPay = parseFloat((sizeForm.userSocialSecurity.socialSecurityBase * item.scalePersonal) / 100).toFixed(2)
-      personalTotal += Number(item.personalPay)
+    if (newItem.switchPersonal) {
+      newItem.personalPay = parseFloat((base * newItem.scalePersonal) / 100).toFixed(2)
+      personalTotal += Number(newItem.personalPay)
     }
+    return newItem
   })
-  personalPayment.value = parseFloat(personalTotal).toFixed(2)
-  companyPayment.value = parseFloat(companyTotal).toFixed(2)
-  return paymentItemList.value
+  return newList
+})
+
+const personalPayment = computed(() => {
+  let total = 0
+  computePaymentItemList.value.forEach(item => {
+    if (item.personalPay) total += Number(item.personalPay)
+  })
+  return total.toFixed(2)
+})
+
+const companyPayment = computed(() => {
+  let total = 0
+  computePaymentItemList.value.forEach(item => {
+    if (item.companyPay) total += Number(item.companyPay)
+  })
+  return total.toFixed(2)
 })
 
 // 公积金自动计算

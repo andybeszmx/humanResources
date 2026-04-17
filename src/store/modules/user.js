@@ -55,7 +55,7 @@ export const useUserStore = defineStore('user', {
     avatar: (state) => state.info.staffPhoto,
     name: (state) => state.info.username,
     company: (state) => state.info.company,
-    departmentName: (state) => state.info.departmentName,
+    departmentName: (state) => state.info.departmentName
     // token: (state) => state.token,
     // routes: (state) => state.routes
   }
