@@ -14,7 +14,7 @@ export default {
   },
   {
     path: '/social_securitys/detail/:id',
-    name: 'detail',
+    name: 'socialDetail',
     component: () => import('@/views/social/detail.vue'),
     hidden:true,
     meta: {
@@ -32,7 +32,7 @@ export default {
   },
   {
     path: '/social_securitys/monthStatement/:yearMonth?',
-    name: 'monthStatement',
+    name: 'socialMonthStatement',
     component: () => import('@/views/social/month.vue'),
     hidden:true,
     meta: {

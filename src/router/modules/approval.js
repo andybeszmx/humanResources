@@ -14,7 +14,7 @@ export default {
   },
   {
     path: '/approvals/securitySetting',
-    name: 'security',
+    name: 'securitySetting',
     component: () => import('@/views/approval/security.vue'),
     hidden:true,
     meta: {
@@ -23,7 +23,7 @@ export default {
   },
   {
     path: '/approvals/salaryApproval/:id',
-    name: 'salary',
+    name: 'salaryApproval',
     component: () => import('@/views/approval/salary.vue'),
     hidden:true,
     meta: {
@@ -32,7 +32,7 @@ export default {
   },
   {
     path: '/approvals/enterApproval/:id',
-    name: 'enter',
+    name: 'enterApproval',
     component: () => import('@/views/approval/enter.vue'),
     hidden:true,
     meta: {
@@ -41,7 +41,7 @@ export default {
   },
   {
     path: '/approvals/leaveApproval/:id',
-    name: 'leave',
+    name: 'leaveApproval',
     component: () => import('@/views/approval/leave.vue'),
     hidden:true,
     meta: {
@@ -50,7 +50,7 @@ export default {
   },
   {
     path: '/approvals/quitApproval/:id',
-    name: 'quit',
+    name: 'quitApproval',
     component: () => import('@/views/approval/quit.vue'),
     hidden:true,
     meta: {
@@ -59,7 +59,7 @@ export default {
   },
   {
     path: '/approvals/overtimeApproval/:id',
-    name: 'overtime',
+    name: 'overtimeApproval',
     component: () => import('@/views/approval/overtime.vue'),
     hidden:true,
     meta: {

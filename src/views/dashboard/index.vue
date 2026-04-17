@@ -14,12 +14,14 @@ import { LineChart } from 'echarts/charts'
 import { GridComponent } from 'echarts/components'
 // 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
 import { CanvasRenderer } from 'echarts/renderers'
+
 // 注册必须的组件
 echarts.use([
   GridComponent,
   LineChart,
   CanvasRenderer
 ])
+
 // 响应式数据
 const homeData = ref({})
 const list = ref([])
@@ -83,7 +85,6 @@ const getHomeDataApi = async () => {
 const getMessageListApi = async () => {
   list.value = await getMessageList()
 }
-
 onMounted(() => {
   // 初始化图表
   social.value = echarts.init(socialChart.value)

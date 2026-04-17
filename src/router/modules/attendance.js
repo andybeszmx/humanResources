@@ -14,7 +14,7 @@ export default {
   },
   {
     path: '/attendances/archiving',
-    name: 'historical',
+    name: 'attendancesHistorical',
     component: () => import('@/views/attendance/historical.vue'),
     hidden: true,    
     meta: {
@@ -23,7 +23,7 @@ export default {
   },
   {
     path: '/attendances/report/:yearMonth?',
-    name: 'report',
+    name: 'attendancesReport',
     component: () => import('@/views/attendance/report.vue'),
     hidden: true,    
     meta: {

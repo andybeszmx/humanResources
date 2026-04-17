@@ -14,7 +14,7 @@ export default {
   },
   {
     path: '/salarys/setting',
-    name: 'setting',
+    name: 'salarysSetting',
     component: () => import('@/views/salary/setting.vue'),
     hidden:true,
     meta: {
@@ -22,7 +22,7 @@ export default {
     }
   },{
     path: '/salarys/monthStatement/:yearMonth?',
-    name: 'monthStatement',
+    name: 'salarysMonthStatement',
     component: () => import('@/views/salary/month.vue'),
     hidden:true,
     meta: {
@@ -32,7 +32,7 @@ export default {
   {
     
     path: '/salarys/details/:yearMonth/:id',
-    name: 'detail',
+    name: 'salarysDetail',
     component: () => import('@/views/salary/detail.vue'),
     hidden:true,
     meta: {
