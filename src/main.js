@@ -15,28 +15,18 @@ import router from './router'
 import '@/icons/index' // icon
 
 import '@/permission' // permission control
-import { useUserStore } from './store'
+import { permissionPlugin } from './directives'
 
 // 创建 app 实例
 const app = createApp(App)
 
 // 使用插件
+app.use(permissionPlugin)
 app.use(ElementPlus)
 app.use(router)
 app.use(createPinia())
 
 app.config.productionTip = false
-
-app.directive('permission', {
-  mounted(el, binding) {
-    // el 指令作用的元素的dom对象
-    const userStore = useUserStore()
-    const points = userStore.info?.roles?.points || []
-    if (!points.includes(binding.value)) {
-      el.remove() // 删除元素
-    }
-  }
-})
 
 // 挂载应用
 app.mount('#app')
